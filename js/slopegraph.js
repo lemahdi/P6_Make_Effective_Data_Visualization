@@ -1,7 +1,7 @@
 function _to_data(y1,y2,d){
 	_d = {};
 	for (var i in d) {
-		key = d[i]['Dest'];
+		key = d[i]['Airport'];
 		_d[key] = {}
 		_d[key]['left'] = Math.round(d[i][y1]*100)/100;
 		_d[key]['right'] = Math.round(d[i][y2]*100)/100;

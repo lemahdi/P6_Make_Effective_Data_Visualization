@@ -21,8 +21,10 @@
     </style>
 
     <script type="text/javascript">
+      // WIDTH = 600;
+      // HEIGHT = 850;
       WIDTH = 600;
-      HEIGHT = 850;
+      HEIGHT = 200;
 
       LEFT_MARGIN = 150;
       RIGHT_MARGIN = 150;
@@ -37,7 +39,7 @@
 
       function slopegraph(all_data) {
         // loading data
-        var data = _to_data("Ratio1987","Ratio2008", all_data);
+        var data = _to_data("1987","2008", all_data);
 
         // scaling
         var _y = d3.scale.linear()
@@ -178,7 +180,8 @@
 <body>
   <div id='slopegraph' class="Aligner Aligner-item"></div>
   <script type="text/javascript">
-    d3.csv("data/DestRatioBetween1987and2008.csv", slopegraph);
+    // d3.csv("data/19872008AirportAttendanceRatio.csv", slopegraph);
+    d3.csv("data/sample.csv", slopegraph);
   </script>
 </body>
 </html>
