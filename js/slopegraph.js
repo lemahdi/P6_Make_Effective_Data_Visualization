@@ -110,7 +110,7 @@ function _slopegraph_preprocess(d){
 			}
 		}
 	}).reverse()
-	var new_data = {};
+	var new_data = {}, left_data = {}, right_data = {};
 	var side, label, val, coord;
 	for (var i = 0; i < both.length; i += 1) {
 
@@ -119,32 +119,50 @@ function _slopegraph_preprocess(d){
 		val = both[i].value;
 		coord = both[i].coord;
 
-		if (!new_data.hasOwnProperty(both[i].label)) {
+		if (!new_data.hasOwnProperty(label)) {
 			new_data[label] = {};
 		}
 		new_data[label][side] = val;
+		new_coord = coord;
 
 		if (i > 0) {
-			if (coord - font_size < both[i-1].coord || 
-				!(val === both[i-1].value && side != both[i-1].side)) {
 
-				new_data[label][side + '_coord'] = coord + font_size;
-
-				for (j = i; j < both.length; j += 1) {
-					both[j].coord = both[j].coord + font_size;
-				}
+			if (val === both[i-1].value) {
+				new_coord = both[i-1].coord;
+			
 			} else {
-				new_data[label][side + '_coord'] = coord;
-			}
+				if (side === both[i-1].side) {
 
-			if (val === both[i-1].value && side !== both[i-1].side) {
-				new_data[label][side + '_coord'] = both[i-1].coord;
+					if (coord - font_size < both[i-1].coord) {
+						new_coord = coord + font_size;
+
+						for (j = i; j < both.length; j += 1) {
+							both[j].coord = both[j].coord + font_size;
+						}
+					}
+				}
 			}
-		} else {
-			new_data[label][side + '_coord'] = coord;
+		}
+		new_data[label][side + '_coord'] = new_coord;
+
+		if (side === "left") {
+			if (!left_data.hasOwnProperty(new_coord)) {
+				left_data[new_coord] = {};
+				left_data[new_coord].label = "";
+				left_data[new_coord].value = val;
+			}
+			left_data[new_coord].label += label + " ";
 		}
 
-	}
+		if (side === "right") {
+			if (!right_data.hasOwnProperty(new_coord)) {
+				right_data[new_coord] = {};
+				right_data[new_coord].label = "";
+				right_data[new_coord].value = val;
+			}
+			right_data[new_coord].label += label + " ";
+		}
+	} // end for loop
 
 	d = [];
 	for (var label in new_data){
@@ -153,5 +171,21 @@ function _slopegraph_preprocess(d){
 		d.push(val)
 	}
 
-	return d;
+	l = [];
+	for (var coord in left_data) {
+		val = left_data[coord];
+		val.coord = coord;
+		l.push(val)
+	}
+
+	r = [];
+	for (var coord in right_data) {
+		val = right_data[coord];
+		val.coord = coord;
+		r.push(val)
+	}
+
+	all = [d, l, r];
+
+	return all;
 }
