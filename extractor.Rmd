@@ -1,0 +1,113 @@
+---
+title: "Make Effective Data Visualization"
+author: "Mahdi"
+date: "1 November 2015"
+output: html_document
+---
+
+
+## Generating subset
+
+```{r, Loading_from_Original_Files}
+library(ggplot2)
+library(dplyr)
+library(plyr)
+
+setwd('~/Projects/P6_Make_Effective_Data_Visualization/data')
+df1987 <- read.csv('1987.csv')
+df2008 <- read.csv('2008.csv')
+
+names(df1987)
+dim(df1987)
+
+# Writing 1987 files
+levels(df1987$Origin)
+levels(df1987$Dest)
+df1987.ByOrigin <-
+  df1987 %>% 
+  group_by(Origin) %>% 
+  dplyr::summarise(n = n())
+df1987.ByOrigin <- plyr::rename(
+                      df1987.ByOrigin, 
+                      c('Origin'='Airport', 'n'='Origin'))
+
+df1987.ByDest <- 
+  df1987 %>% 
+  group_by(Dest) %>% 
+  dplyr::summarise(n = n())
+df1987.ByDest <- plyr::rename(
+                      df1987.ByDest, 
+                      c('Dest'='Airport', 'n'='Dest'))
+
+df1987.Attendance <- merge(df1987.ByOrigin, 
+                           df1987.ByDest, 
+                           by = "Airport", all.x = TRUE)
+df1987.Attendance[is.na(df1987.Attendance)] <- 0.
+df1987.Attendance$Total <- df1987.Attendance$Origin + df1987.Attendance$Dest
+df1987.Attendance$Ratio <- df1987.Attendance$Total /
+                              sum(df1987.Attendance$Total)
+write.csv(df1987.Attendance, "1987AirportAttendance.csv", row.names = FALSE)
+
+# Writing 2008 files
+levels(df2008$Origin)
+levels(df2008$Dest)
+df2008.ByOrigin <-
+  df2008 %>% 
+  group_by(Origin) %>% 
+  dplyr::summarise(n = n())
+df2008.ByOrigin <- plyr::rename(
+                      df2008.ByOrigin, 
+                      c('Origin'='Airport', 'n'='Origin'))
+
+df2008.ByDest <- 
+  df2008 %>% 
+  group_by(Dest) %>% 
+  dplyr::summarise(n = n())
+df2008.ByDest <- plyr::rename(
+                      df2008.ByDest, 
+                      c('Dest'='Airport', 'n'='Dest'))
+
+df2008.Attendance <- merge(df2008.ByOrigin, 
+                           df2008.ByDest, 
+                           by = "Airport", all.x = TRUE)
+df2008.Attendance[is.na(df2008.Attendance)] <- 0.
+df2008.Attendance$Total <- df2008.Attendance$Origin + df2008.Attendance$Dest
+df2008.Attendance$Ratio <- df2008.Attendance$Total /
+                              sum(df2008.Attendance$Total)
+write.csv(df2008.Attendance, "2008AirportAttendance.csv", row.names = FALSE)
+```
+
+
+## Merging subsets
+
+```{r}
+df1987 <- read.csv('1987AirportAttendance.csv')
+df2008 <- read.csv('2008AirportAttendance.csv')
+
+# take all
+df <- merge(df1987, df2008, by = "Airport", all = TRUE)
+df <- df %>% select(c(Airport, Ratio.x, Ratio.y))
+df[is.na(df)] <- 0.
+df <- plyr::rename(df, c('Ratio.x'='1987', 'Ratio.y'='2008'))
+df$`1987` <- df$`1987` * 100
+df$`2008` <- df$`2008` * 100
+sum(df$`1987`)
+sum(df$`2008`)
+head(df)
+write.csv(df, "19872008AirportAttendanceRatio.csv", row.names = FALSE)
+
+# limit to .5% ratio, either origin or destination
+df.subset <- subset(df, df$`1987`>=1 | df$`2008`>=1)
+dim(df)
+dim(df.subset)
+head(df.subset)
+write.csv(df, "19872008SubsetAirportAttendanceRatio.csv", row.names = FALSE)
+```
+
+
+## Display final result
+
+```{r}
+df <- read.csv('DestRatioBetween1987and2008.csv')
+```
+
