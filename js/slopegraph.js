@@ -75,8 +75,6 @@ function _slopegraph_preprocess(d){
 	// computes y coords for each data point
 	// create two separate object arrays for each side, then order them together, and THEN run the shifting alg.
 
-	var offset;
-
 	var font_size = 10;
 	var l = d.length;
 
@@ -110,7 +108,7 @@ function _slopegraph_preprocess(d){
 			}
 		}
 	}).reverse()
-	var new_data = {}, left_data = {}, right_data = {};
+	var new_data = {}, dx = {};
 	var side, label, val, coord;
 	for (var i = 0; i < both.length; i += 1) {
 
@@ -140,24 +138,15 @@ function _slopegraph_preprocess(d){
 				}
 			}
 		}
+
 		new_data[label][side + '_coord'] = new_coord;
 
 		if (side === "left") {
-			if (!left_data.hasOwnProperty(new_coord)) {
-				left_data[new_coord] = {};
-				left_data[new_coord].label = "";
-				left_data[new_coord].value = val;
+			if (!dx.hasOwnProperty(new_coord)) {
+				dx[new_coord] = 0;
 			}
-			left_data[new_coord].label += label + " ";
-		}
-
-		if (side === "right") {
-			if (!right_data.hasOwnProperty(new_coord)) {
-				right_data[new_coord] = {};
-				right_data[new_coord].label = "";
-				right_data[new_coord].value = val;
-			}
-			right_data[new_coord].label += label + " ";
+			new_data[label]["dx"] = dx[new_coord]*25;
+			dx[new_coord] -= 1;
 		}
 	} // end for loop
 
@@ -165,24 +154,9 @@ function _slopegraph_preprocess(d){
 	for (var label in new_data){
 		val = new_data[label];
 		val.label = label;
+		val.dx = val.dx;
 		d.push(val)
 	}
 
-	l = [];
-	for (var coord in left_data) {
-		val = left_data[coord];
-		val.coord = coord;
-		l.push(val)
-	}
-
-	r = [];
-	for (var coord in right_data) {
-		val = right_data[coord];
-		val.coord = coord;
-		r.push(val)
-	}
-
-	all = [d, l, r];
-
-	return all;
+	return d;
 }
