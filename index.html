@@ -18,6 +18,23 @@
       .Aligner .Aligner-item {
         max-width: 50%;
       }
+
+      /*.OnSlopegraphGroup {
+        fill: red;
+      }
+
+      .OutSlopeGraphGroup {
+        fill: grey;
+      }*/
+
+      .GroupHover:hover text {
+        fill: red;
+        overflow: visible;
+      }
+      .GroupHover:hover line{
+        stroke: red;
+        overflow: visible;
+      }
     </style>
 
     <script type="text/javascript">
@@ -83,69 +100,66 @@
          return HEIGHT - _y(d);
         };
 
+        var group = sg.selectAll().data(data).enter()
+          .append('svg:g')
+            // .on('mouseover', function(d) {
+            //   d3.select(this)
+            //     .attr('class', 'OnSlopegraphGroup');
+            // })
+            // .on('mouseout', function(d) {
+            //   d3.select(this)
+            //     .attr('class', 'OutSlopeGraphGroup');
+            // })
+            // .attr('fill', 'grey');;
+            .attr('class', 'GroupHover');
         // left labels
-        sg.selectAll('.left_labels')
-          .data(data).enter().append('svg:text')
-            .attr('x', function(d,i) {
-              return x(d.dx);
-            })
-            .attr('y', function(d,i){
-              return y(d.left_coord);
-            })
-            .attr('dy', '.35em')
-            .attr('font-size', FONT_SIZE)
-            .attr('font-weight', 'bold')
-            .attr('text-anchor', 'end')
-            .text(function(d,i){ return d.label; })
-            .attr('fill', 'grey')
-            .on('mouseover', function(d) {
-              d3.select(this).attr('fill', 'black');
-            })
-            .on('mouseout', function(d) {
-              d3.select(this).attr('fill', 'grey');
-            });
-
+        group.append('svg:text')
+          .attr('x', function(d,i) {
+            return x(d.dx);
+          })
+          .attr('y', function(d,i){
+            return y(d.left_coord);
+          })
+          .attr('dy', '.35em')
+          .attr('font-size', FONT_SIZE)
+          .attr('font-weight', 'bold')
+          .attr('text-anchor', 'end')
+          .text(function(d,i){ return d.label; })
+          .attr('fill', 'grey');
         // left values
-        sg.selectAll('.left_values')
-          .data(data).enter().append('svg:text')
-            .attr('x', LEFT_MARGIN-10)
-            .attr('y', function(d,i){
-              return y(d.left_coord);
-            })
-            .attr('dy', '.35em')
-            .attr('font-size', FONT_SIZE)
-            .attr('text-anchor', 'end')
-            .text(function(d,i){ return [d.left, "%"].join("")})
-            .attr('fill', 'grey')
-
-        // right labels
-        // sg.selectAll('.right_labels')
-        //   // .data(data).enter().append('svg:text')
-        //   .data(right_data).enter().append('svg:text')
-        //     .attr('x', WIDTH-RIGHT_MARGIN)
-        //     .attr('y', function(d,i){
-        //       return y(d.coord)
-        //       // return y(d.right_coord)
-        //     })
-        //     .attr('dy', '.35em')
-        //     .attr('dx', 45)
-        //     .attr('font-weight', 'bold')
-        //     .attr('font-size', FONT_SIZE)
-        //     .text(function(d,i){ return d.label})
-        //     .attr('fill', 'grey')
-
+        group.append('svg:text')
+          .attr('x', LEFT_MARGIN-10)
+          .attr('y', function(d,i){
+            return y(d.left_coord);
+          })
+          .attr('dy', '.35em')
+          .attr('font-size', FONT_SIZE)
+          .attr('text-anchor', 'end')
+          .text(function(d,i){ return [d.left, "%"].join("")})
+          .attr('fill', 'grey');
         // right values
-        sg.selectAll('.right_values')
-          .data(data).enter().append('svg:text')
-            .attr('x', WIDTH-RIGHT_MARGIN)
-            .attr('y', function(d,i){
-              return y(d.right_coord);
-            })
-            .attr('dy', '.35em')
-            .attr('dx', 10)
-            .attr('font-size', FONT_SIZE)
-            .text(function(d,i){ return [d.right, "%"].join("")})
-            .attr('fill', 'grey')
+        group.append('svg:text')
+          .attr('x', WIDTH-RIGHT_MARGIN)
+          .attr('y', function(d,i){
+            return y(d.right_coord);
+          })
+          .attr('dy', '.35em')
+          .attr('dx', 10)
+          .attr('font-size', FONT_SIZE)
+          .text(function(d,i){ return [d.right, "%"].join("")})
+          .attr('fill', 'grey');
+        // slope lines
+        group.append('svg:line')
+          .attr('x1', LEFT_MARGIN)
+          .attr('x2', WIDTH-RIGHT_MARGIN)
+          .attr('y1', function(d,i){
+            return y(d.left_coord)
+          })
+          .attr('y2', function(d,i){
+            return y(d.right_coord)
+          })
+          .attr('opacity', .6)
+          .attr('stroke', 'grey');
 
         // title
         sg.append('svg:text')
@@ -175,28 +189,14 @@
           .attr('text-anchor', 'middle')
           .text('Flight Origins Ratio\n (By Airport)')
           .attr('font-variant', 'small-caps')
-
-        // drawing slope lines
-        sg.selectAll('.slopes')
-          .data(data).enter().append('svg:line')
-            .attr('x1', LEFT_MARGIN)
-            .attr('x2', WIDTH-RIGHT_MARGIN)
-            .attr('y1', function(d,i){
-              return y(d.left_coord)
-            })
-            .attr('y2', function(d,i){
-              return y(d.right_coord)
-            })
-            .attr('opacity', .6)
-            .attr('stroke', 'black')
       }
     </script>
   </head>
 <body>
   <div id='slopegraph' class="Aligner Aligner-item"></div>
   <script type="text/javascript">
-    // d3.csv("data/19872008SubsetAirportAttendanceRatio.csv", slopegraph);
-    d3.csv("data/sample.csv", slopegraph);
+    d3.csv("data/19872008SubsetAirportAttendanceRatio.csv", slopegraph);
+    // d3.csv("data/sample.csv", slopegraph);
   </script>
 </body>
 </html>
