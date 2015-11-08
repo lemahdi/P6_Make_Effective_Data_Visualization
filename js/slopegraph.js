@@ -77,7 +77,7 @@ function _slopegraph_preprocess(d){
 
 	var offset;
 
-	var font_size = 15;
+	var font_size = 10;
 	var l = d.length;
 
 	var max = _max_key(d);
@@ -131,14 +131,11 @@ function _slopegraph_preprocess(d){
 				new_coord = both[i-1].coord;
 			
 			} else {
-				if (side === both[i-1].side) {
+				if (coord - font_size < both[i-1].coord) {
+					new_coord = coord + font_size;
 
-					if (coord - font_size < both[i-1].coord) {
-						new_coord = coord + font_size;
-
-						for (j = i; j < both.length; j += 1) {
-							both[j].coord = both[j].coord + font_size;
-						}
+					for (j = i; j < both.length; j += 1) {
+						both[j].coord = both[j].coord + font_size;
 					}
 				}
 			}
