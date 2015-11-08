@@ -4,3 +4,4 @@ include/
 lib/
 .DS_Store
 data/
+sample.html
