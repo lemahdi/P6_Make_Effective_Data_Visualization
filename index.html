@@ -13,18 +13,9 @@
         align-items: center;
         justify-content: center;
       }
-
       .Aligner .Aligner-item {
         max-width: 50%;
       }
-
-      /*.OnSlopegraphGroup {
-        fill: red;
-      }
-
-      .OutSlopeGraphGroup {
-        fill: grey;
-      }*/
 
       .GroupHover:hover text {
         fill: red;
@@ -38,7 +29,6 @@
 
     <script type="text/javascript">
       WIDTH = 600;
-      // HEIGHT = 850;
       HEIGHT = 200;
 
       LEFT_MARGIN = 150;
@@ -53,26 +43,30 @@
       
       ELIGIBLE_SIZE = HEIGHT - TOP_MARGIN - BOTTOM_MARGIN;
 
-
       function slopegraph(all_data) {
         // loading data
         var data = _to_data("1987","2008", all_data);
 
-        // scaling
+        // linear scale mapping min and max data points to the top and bottom of the svg
         var _y = d3.scale.linear()
               .domain([_min_key(data), _max_key(data)])
-              .range([TOP_MARGIN, HEIGHT-BOTTOM_MARGIN])
+              .range([TOP_MARGIN, HEIGHT-BOTTOM_MARGIN]);
 
-        function y(d,i){
-          return HEIGHT - _y(d)
+        // help function to get y-coordinates
+        function y(d,i) {
+          return HEIGHT - _y(d);
         }
 
-        for (var i = 0; i < data.length; i += 1){
+        // setting coordinates
+        for (var i=0; i<data.length; i+=1) {
           data[i].left_coord = y(data[i].left);
           data[i].right_coord = y(data[i].right);
         }
 
+        // shifting coordinates accordingly
+        // to avoid overlapping
         data = _slopegraph_preprocess(data);
+
         var min, max;
         var _ = _min_max(data);
         min = _[0];
@@ -87,29 +81,24 @@
           .attr('height', HEIGHT)
           .attr('max-width', 0.5);
 
+        // linear scale mapping min and max y-coordinates to the top and bottom of the svg
         _y = d3.scale.linear()
           .domain([max, min])
-          .range([TOP_MARGIN, HEIGHT-BOTTOM_MARGIN])
+          .range([TOP_MARGIN, HEIGHT-BOTTOM_MARGIN]);
 
+        // help function to get x-coordinate
         function x(o,i) {
           return LEFT_MARGIN-45+o;
         };
 
-        function y(d,i){
+        // help function to get y-coordinate
+        function y(d,i) {
          return HEIGHT - _y(d);
         };
 
+        // grouping airport name, values and slope line
         var group = sg.selectAll().data(data).enter()
           .append('svg:g')
-            // .on('mouseover', function(d) {
-            //   d3.select(this)
-            //     .attr('class', 'OnSlopegraphGroup');
-            // })
-            // .on('mouseout', function(d) {
-            //   d3.select(this)
-            //     .attr('class', 'OutSlopeGraphGroup');
-            // })
-            // .attr('fill', 'grey');;
             .attr('class', 'GroupHover');
         // left labels
         group.append('svg:text')
@@ -186,7 +175,7 @@
           .attr('x', WIDTH/2)
           .attr('y', TOP_MARGIN/2)
           .attr('text-anchor', 'middle')
-          .text('Flight Origins Ratio\n (By Airport)')
+          .text('Airports Attendance Ratio')
           .attr('font-variant', 'small-caps')
       }
     </script>
@@ -195,7 +184,6 @@
   <div id='slopegraph' class="Aligner Aligner-item"></div>
   <script type="text/javascript">
     d3.csv("data/19872008SubsetAirportAttendanceRatio.csv", slopegraph);
-    // d3.csv("data/sample.csv", slopegraph);
   </script>
 </body>
 </html>
