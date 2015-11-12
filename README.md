@@ -9,8 +9,10 @@ By Mohammed Mahdi AKKOUH
 
 Summary - in no more than 4 sentences, briefly introduce your data visualization and add any context that can help readers understand it
 The dataset compiles data about US flights between years 1987 and 2008. This data comprises times and dates of flights, origin and destination airports, detailed delay times along with flight status.
-Given the huge size of the original datasets, we’ll extract a subset of years 1987 and 2008, summarizing number of flights from an to an airport. Our aim will be to show how airport frequency has evolved between those two years using a slopegrah.
+Given the huge size of the original datasets, we’ll extract a subset of years 1987 and 2008, summarizing number of flights from an to an airport. Our aim will be to show how airport frequency has evolved between those two years, especially those with bigger changes. We’ll be using a slopegrah. All extraction and manipulation of the original dataset has been done using R, please refer to file extractor.Rmd.
 Below is preview of the dataset:
+
+![alt tag](https://raw.githubusercontent.com/lemahdi/P6_Make_Effective_Data_Visualization/master/img/dataset.png)
 
 Airports attendance is defined as ratio to the total attendance.
 
