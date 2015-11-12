@@ -21,9 +21,19 @@
         fill: red;
         overflow: visible;
       }
-      .GroupHover:hover line{
+      .GroupHover:hover line {
         stroke: red;
         overflow: visible;
+      }
+
+      #STL, #PIT, #MDW {
+        font-weight: bold;
+        fill: black;
+        opacity: 1;
+      }
+      #STL_line, #PIT_line, #MDW_line {
+        stroke: black;
+        opacity: 1;
       }
     </style>
 
@@ -111,47 +121,67 @@
           })
           .attr('dy', '.35em')
           .attr('font-size', FONT_SIZE)
-          .attr('font-weight', 'bold')
           .attr('text-anchor', 'end')
-          .text(function(d,i){ return d.label; })
-          .attr('fill', 'grey');
+          .text(function(d,i) {
+            return d.label;
+          })
+          .attr('fill', 'grey')
+          .attr('opacity', .5)
+          .attr('id', function(d,i) {
+            return d.label;
+          });
 
         // left values
         group.append('svg:text')
           .attr('x', LEFT_MARGIN-10)
-          .attr('y', function(d,i){
+          .attr('y', function(d,i) {
             return y(d.left_coord);
           })
           .attr('dy', '.35em')
           .attr('font-size', FONT_SIZE)
           .attr('text-anchor', 'end')
-          .text(function(d,i){ return [d.left, "%"].join("")})
-          .attr('fill', 'grey');
+          .text(function(d,i) {
+            return [d.left, "%"].join("")
+          })
+          .attr('fill', 'grey')
+          .attr('opacity', .5)
+          .attr('id', function(d,i) {
+            return d.label;
+          });
 
         // right values
         group.append('svg:text')
           .attr('x', WIDTH-RIGHT_MARGIN)
-          .attr('y', function(d,i){
+          .attr('y', function(d,i) {
             return y(d.right_coord);
           })
           .attr('dy', '.35em')
           .attr('dx', 10)
           .attr('font-size', FONT_SIZE)
-          .text(function(d,i){ return [d.right, "%"].join("")})
-          .attr('fill', 'grey');
+          .text(function(d,i) {
+            return [d.right, "%"].join("");
+          })
+          .attr('fill', 'grey')
+          .attr('opacity', .5)
+          .attr('id', function(d,i) {
+            return d.label;
+          });
 
         // slope lines
         group.append('svg:line')
           .attr('x1', LEFT_MARGIN)
           .attr('x2', WIDTH-RIGHT_MARGIN)
-          .attr('y1', function(d,i){
-            return y(d.left_coord)
+          .attr('y1', function(d,i) {
+            return y(d.left_coord);
           })
-          .attr('y2', function(d,i){
-            return y(d.right_coord)
+          .attr('y2', function(d,i) {
+            return y(d.right_coord);
           })
-          .attr('opacity', .6)
-          .attr('stroke', 'grey');
+          .attr('opacity', .5)
+          .attr('stroke', 'grey')
+          .attr('id', function(d,i) {
+            return d.label + "_line";
+          });
 
         // left column title
         sg.append('svg:text')
