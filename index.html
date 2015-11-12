@@ -100,6 +100,7 @@
         var group = sg.selectAll().data(data).enter()
           .append('svg:g')
             .attr('class', 'GroupHover');
+
         // left labels
         group.append('svg:text')
           .attr('x', function(d,i) {
@@ -114,6 +115,7 @@
           .attr('text-anchor', 'end')
           .text(function(d,i){ return d.label; })
           .attr('fill', 'grey');
+
         // left values
         group.append('svg:text')
           .attr('x', LEFT_MARGIN-10)
@@ -125,6 +127,7 @@
           .attr('text-anchor', 'end')
           .text(function(d,i){ return [d.left, "%"].join("")})
           .attr('fill', 'grey');
+
         // right values
         group.append('svg:text')
           .attr('x', WIDTH-RIGHT_MARGIN)
@@ -136,6 +139,7 @@
           .attr('font-size', FONT_SIZE)
           .text(function(d,i){ return [d.right, "%"].join("")})
           .attr('fill', 'grey');
+
         // slope lines
         group.append('svg:line')
           .attr('x1', LEFT_MARGIN)
@@ -149,7 +153,7 @@
           .attr('opacity', .6)
           .attr('stroke', 'grey');
 
-        // title
+        // left column title
         sg.append('svg:text')
           .attr('x', LEFT_MARGIN)
           .attr('y', TOP_MARGIN/2)
@@ -157,12 +161,14 @@
           .attr('opacity', .5)
           .text(Y1)
 
+        // right column title
         sg.append('svg:text')
           .attr('x', WIDTH-RIGHT_MARGIN)
           .attr('y', TOP_MARGIN/2)
           .attr('opacity', .5)
           .text(Y2)
 
+        // underlying title
         sg.append('svg:line')
           .attr('x1', LEFT_MARGIN/2)
           .attr('x2', WIDTH-RIGHT_MARGIN/2)
@@ -171,6 +177,7 @@
           .attr('stroke', 'black')
           .attr('opacity', .5)
 
+        // title
         sg.append('svg:text')
           .attr('x', WIDTH/2)
           .attr('y', TOP_MARGIN/2)
