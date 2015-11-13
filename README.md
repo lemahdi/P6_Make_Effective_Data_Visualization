@@ -20,7 +20,11 @@ Design - explain any design choices you made including changes to the visualizat
 I chose the slopegraph as a graphic for my dataset. Given that I need to show the evolution of the airports attendance between 2 dates, a slopegraph is an elegant solution displaying all information without need of any supplemental text.
 
 Feedback - include all feedback you received from others on your visualization from the first sketch to the final visualization
+This is my first sketch: http://bl.ocks.org/lemahdi/raw/9a1c00845d2b56545312/
 In the beginning, I displayed all the airports. Attendance ratio was displayed as percentage with 2 decimal points. However, given the density of the dataset (around 237 airports), many data overlapped. So I chose to limit my dataset to airports having an attendance bigger than 0.5%, either on year 1987 or 2008. Overlapping diminished but didn’t disappear. So I grouped airports with the same attendance on year 1987 together and removed their label from column 2008 which had the effect of removing completely the overlapping. Still, for airports having the same attendance, we couldn’t know which line to follow as we removed the airport label from column 2008. The solution was to group data in <g> elements and add a hover effect.
+I ended up with this sketch which I submitted for feedback: 
+http://bl.ocks.org/lemahdi/raw/6e3b8db524e1fb97c426/
+My feedback post is here: https://discussions.udacity.com/t/feedback-for-final-project/38041
 
 Resources - list any sources you consulted to create your visualization
 http://bl.ocks.org/biovisualize/4348024
