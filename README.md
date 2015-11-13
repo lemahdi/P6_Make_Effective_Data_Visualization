@@ -25,6 +25,12 @@ In the beginning, I displayed all the airports. Attendance ratio was displayed a
 I ended up with this sketch which I submitted for feedback: 
 http://bl.ocks.org/lemahdi/raw/6e3b8db524e1fb97c426/
 My feedback post is here: https://discussions.udacity.com/t/feedback-for-final-project/38041
+First feedback:
+  - I tweaked javascript code in order to avoid overlapping of highlited text
+  - I used a neutral color (brown) to highlight slopes while hovering
+  - I changed the title as suggested
+  - I added a pop up with portfolio name appearing when hevering the airport code
+  - Improved story's text
 
 Resources - list any sources you consulted to create your visualization
 http://bl.ocks.org/biovisualize/4348024
@@ -49,3 +55,4 @@ http://bost.ocks.org/mike/selection/#data
 https://github.com/mbostock/d3/wiki/Selections#datum
 http://charliepark.org/slopegraphs/
 http://www.storytellingwithdata.com/blog/2014/03/more-on-slopegraphs
+http://www.perceptualedge.com/articles/visual_business_intelligence/rules_for_using_color.pdf

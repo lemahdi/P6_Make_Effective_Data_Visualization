@@ -51,11 +51,11 @@
       }
 
       .GroupHover:hover text {
-        fill: red;
+        fill: brown;
         overflow: visible;
       }
       .GroupHover:hover line {
-        stroke: red;
+        stroke: brown;
         overflow: visible;
       }
 
@@ -63,6 +63,7 @@
         font-weight: bold;
         fill: black;
         opacity: 1;
+        background-color: white;
       }
       #STL_line, #PIT_line, #MDW_line {
         stroke: black;
@@ -162,6 +163,10 @@
           .attr('opacity', .5)
           .attr('id', function(d,i) {
             return d.label;
+          })
+          .append('svg:title')
+          .text(function(d,i) {
+            return d.name;
           });
 
         // left values
@@ -192,7 +197,9 @@
           .attr('dx', 10)
           .attr('font-size', FONT_SIZE)
           .text(function(d,i) {
-            return [d.right, "%"].join("");
+            if (d.label!="OAK" && d.label!="MIA") {
+              return [d.right, "%"].join("");
+            }
           })
           .attr('fill', 'grey')
           .attr('opacity', .5)
@@ -245,7 +252,7 @@
           .attr('x', WIDTH/2)
           .attr('y', TOP_MARGIN/2)
           .attr('text-anchor', 'middle')
-          .text('Airports Attendance Ratio')
+          .text('Airports Shares of Travellers')
           .attr('font-variant', 'small-caps');
       }
     </script>
