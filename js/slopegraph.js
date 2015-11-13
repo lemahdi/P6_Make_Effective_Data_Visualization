@@ -10,6 +10,7 @@ function _to_data(y1,y2,d) {
 		_d[key]['left'] = Math.round(d[i][y1]*100)/100;
 		_d[key]['right'] = Math.round(d[i][y2]*100)/100;
 		_d[key]['label'] = key;
+		_d[key]['name'] = d[i]['Name'];
 	}
 	
 	d = [];
@@ -92,8 +93,8 @@ function _slopegraph_preprocess(d) {
 	var di;
 	for (var i=0; i<d.length; i+=1) {
 		di = d[i];
-		left.push({label:di.label, value:di.left, side:'left', coord:di.left_coord});
-		right.push({label:di.label, value:di.right, side:'right', coord: di.right_coord});
+		left.push({label:di.label, value:di.left, side:'left', coord:di.left_coord, name:di.name});
+		right.push({label:di.label, value:di.right, side:'right', coord: di.right_coord, name:di.name});
 	}
 
   // attaching both previous lists
@@ -128,11 +129,14 @@ function _slopegraph_preprocess(d) {
 		side = both[i].side;
 		val = both[i].value;
 		coord = both[i].coord;
+		name = both[i].name;
 
 		if (!new_data.hasOwnProperty(label)) {
 			new_data[label] = {};
 		}
 		new_data[label][side] = val;
+		new_data[label]['name'] = name;
+
 		new_coord = coord;
 
 		if (i > 0) {
@@ -168,10 +172,10 @@ function _slopegraph_preprocess(d) {
 
 	// list of all transformed data
 	d = [];
-	for (var label in new_data){
+	for (var label in new_data) {
 		val = new_data[label];
 		val.label = label;
-		d.push(val)
+		d.push(val);
 	}
 
 	return d;
