@@ -31,6 +31,11 @@ First feedback:
   - I changed the title as suggested
   - I added a pop up with portfolio name appearing when hevering the airport code
   - Improved story's text
+  - http://bl.ocks.org/lemahdi/raw/c2c43f5f8b078c27ab29/
+Second feedback:
+  - I made the slope lines more thicker
+  - I improved the text
+  - http://bl.ocks.org/lemahdi/raw/0d4c9f42c467dadc52ed/
 
 Resources - list any sources you consulted to create your visualization
 http://bl.ocks.org/biovisualize/4348024
