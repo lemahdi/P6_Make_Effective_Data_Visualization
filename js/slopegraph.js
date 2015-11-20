@@ -26,11 +26,11 @@ function _to_data(y1,y2,d) {
 // either of left or right column
 function _max_key(v) {
 	var vi, max_side;
-	var _m = undefined;
+	var _m = -1;
 	for (var i = 0; i < v.length; i += 1) {
 		vi = v[i];
 		max_side = Math.max(vi.left, vi.right);
-		if (_m == undefined || max_side > _m) {
+		if (max_side > _m) {
 			_m = max_side;
 		}
 	}
@@ -41,11 +41,11 @@ function _max_key(v) {
 // either of left or right column
 function _min_key(v) {
 	var vi, min_side;
-	var _m = undefined;
+	var _m = 1000000;
 	for (var i=0; i<v.length; i+=1) {
 		vi = v[i];
 		min_side = Math.min(vi.left, vi.right);
-		if (_m==undefined || min_side<_m) {
+		if (min_side < _m) {
 			_m = min_side;
 		}
 	}
@@ -57,18 +57,18 @@ function _min_key(v) {
 // in order to define range of coordinates
 function _min_max(v){
 	var vi, min_side, max_side;
-	var _max = undefined;
-	var _min = undefined;
+	var _max = -1;
+	var _min = 1000000;
 
 	for (var i = 0; i < v.length; i += 1) {
 		vi = v[i];
 		min_side = Math.min(vi.left_coord, vi.right_coord);
 		max_side = Math.max(vi.left_coord, vi.right_coord);
 
-		if (_min==undefined || min_side<_min) {
+		if (min_side < _min) {
 			_min = min_side;
 		}
-		if (_max==undefined || max_side>_max) {
+		if (max_side > _max) {
 			_max = max_side;
 		}
 	}
@@ -78,7 +78,7 @@ function _min_max(v){
 // computes y coords for each data point
 // create two separate object arrays for each side, 
 // order them together, and shift along x-axis
-// airport with same left ratios
+// airports with same left ratios
 function _slopegraph_preprocess(d) {
 	var font_size = 10;
 	var l = d.length;
