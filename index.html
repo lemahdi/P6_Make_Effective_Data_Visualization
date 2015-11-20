@@ -59,15 +59,19 @@
         overflow: visible;
       }
 
-      #STL, #PIT, #MDW {
+      #STL, #PIT, #MDW, #ATL {
         font-weight: bold;
         fill: black;
         opacity: 1;
         background-color: white;
       }
-      #STL_line, #PIT_line, #MDW_line {
+      #STL_line, #PIT_line, #MDW_line, #ATL_line {
         stroke: black;
         opacity: 1;
+      }
+      #ATL_line {
+        stroke-dasharray: 5,5;
+        stroke-width: 3;
       }
     </style>
 
@@ -261,9 +265,12 @@
 <body>
   <div id='slopegraph' class="Aligner Aligner-item"></div>
   <div id='story' class="Align-story">
-    <h1>Saint-Louis, Pittsburgh, Chicago .. What do they have in common?</h1>
+    <h1>Atlanta, St. Louis, Pittsburgh, Chicago .. What do they have in common?</h1>
     <p>
-      These 3 cities are home to airports that have seen their visit-share change drastically. The graph on the left shows shares of US aiports attendance between years 1987 and 2008. With top 5 airports keeping their lead positions at almost the same ratios, most others have swung in a range between +-.05% and +-.8%. However, Saint-Louis and Pittsburgh airpots have recorded the largest decrease making their shares 2 to 4 times less than what they were in 1987, while Chicago airport jumped by 257% more share.
+      These 4 cities are home to airports with outstanding performance in attendance between years 1987 and 2008. The graph on the left shows how shares of US airports attendance evolved between those two years.
+      With top 5 airports keeping their lead positions and most airports swinging in a range between +-.05% and +-.8%; Atlanta, St. Louis, Pittsburgh and Chicago clearly beat these numbers.
+      On the negative side, St. Louis and Pittsburgh airpots have recorded the largest decrease losing 2 to 4 times of their shares.
+      While Atlanta <i>(dashed because it has an outlier share)</i> and Chicago airports increased their shares by 0.84% and 0.9% from 5.07% and 0.35% <i>(which means 257% increase for Chicago)</i>.
     </p>
   </div>
   <script type="text/javascript">
